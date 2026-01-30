@@ -1,0 +1,305 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins.scss';
+
+.search-page {
+    min-height: 100vh;
+    padding: $spacing-xl 0;
+    background-color: $background-light;
+}
+
+// Search Header
+.search-header {
+    margin-bottom: $spacing-xl;
+
+    .search-bar-wrapper {
+        display: flex;
+        align-items: center;
+        background: white;
+        padding: $spacing-sm;
+        border-radius: $radius-xl;
+        box-shadow: $shadow-md;
+        max-width: 800px;
+        margin: 0 auto;
+
+        .search-icon {
+            margin: 0 $spacing-md;
+            color: $text-secondary-light;
+        }
+
+        input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: $font-size-lg;
+            padding: $spacing-sm;
+            font-family: $font-primary;
+        }
+
+        .btn {
+            border-radius: $radius-lg;
+        }
+    }
+}
+
+// Layout
+.results-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: $spacing-xl;
+    align-items: start;
+
+    @include tablet {
+        grid-template-columns: 250px 1fr;
+    }
+
+    @include mobile {
+        grid-template-columns: 1fr;
+    }
+}
+
+// Sidebar Filters
+.filters-sidebar {
+    padding: $spacing-lg;
+    position: sticky;
+    top: $spacing-xl;
+
+    .medicine-info {
+        margin-bottom: $spacing-lg;
+
+        h3 {
+            font-size: $font-size-xl;
+            margin-bottom: $spacing-xs;
+            @include gradient-text;
+        }
+
+        .generic {
+            color: $text-secondary-light;
+            font-size: $font-size-sm;
+            margin-bottom: $spacing-sm;
+        }
+    }
+
+    .divider {
+        height: 1px;
+        background: $border-light;
+        margin: $spacing-lg 0;
+    }
+
+    .filter-group {
+        margin-bottom: $spacing-lg;
+
+        label {
+            display: flex;
+            justify-content: space-between;
+            font-weight: $font-weight-semibold;
+            margin-bottom: $spacing-md;
+
+            .primary-color {
+                color: $primary-blue;
+            }
+        }
+
+        .range-slider {
+            width: 100%;
+            accent-color: $primary-blue;
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: $font-size-xs;
+            color: $text-secondary-light;
+            margin-top: $spacing-xs;
+        }
+    }
+
+    .view-toggle {
+        display: flex;
+        background: $background-light;
+        padding: $spacing-xs;
+        border-radius: $radius-lg;
+        gap: $spacing-xs;
+
+        .toggle-btn {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: $spacing-sm;
+            border-radius: $radius-md;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: $spacing-xs;
+            cursor: pointer;
+            font-family: $font-primary;
+            font-weight: $font-weight-medium;
+            color: $text-secondary-light;
+            transition: all $transition-fast;
+
+            &.active {
+                background: white;
+                color: $primary-blue;
+                box-shadow: $shadow-sm;
+            }
+
+            &:hover:not(.active) {
+                background: rgba(0, 0, 0, 0.05);
+            }
+        }
+    }
+}
+
+// Results Content
+.results-header {
+    margin-bottom: $spacing-lg;
+
+    h2 {
+        font-size: $font-size-2xl;
+        margin-bottom: $spacing-xs;
+    }
+
+    p {
+        color: $text-secondary-light;
+    }
+}
+
+// Pharmacy Grid
+.pharmacy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: $spacing-lg;
+}
+
+.pharmacy-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: $spacing-md;
+
+        .pharmacy-info {
+            h3 {
+                font-size: $font-size-lg;
+                margin-bottom: $spacing-xs;
+                @include line-clamp(1);
+            }
+
+            .distance-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                font-size: $font-size-xs;
+                color: $text-secondary-light;
+                background: $background-light;
+                padding: 4px 8px;
+                border-radius: $radius-full;
+
+                .material-icons {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: $font-size-xs;
+            font-weight: $font-weight-semibold;
+            padding: 4px 8px;
+            border-radius: $radius-full;
+            background: rgba(0, 0, 0, 0.05);
+
+            .dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+            }
+        }
+    }
+
+    .card-body {
+        flex: 1;
+        margin-bottom: $spacing-lg;
+
+        .price-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: $spacing-sm;
+            padding-bottom: $spacing-sm;
+            border-bottom: 1px dashed $border-light;
+
+            .label {
+                color: $text-secondary-light;
+                font-size: $font-size-sm;
+            }
+
+            .value {
+                font-weight: $font-weight-bold;
+                font-size: $font-size-lg;
+                color: $primary-blue;
+            }
+        }
+
+        .address-info {
+            display: flex;
+            align-items: start;
+            gap: $spacing-sm;
+            font-size: $font-size-sm;
+            color: $text-secondary-light;
+
+            .material-icons {
+                font-size: 18px;
+                margin-top: 2px;
+            }
+        }
+    }
+
+    .card-actions {
+        display: flex;
+        gap: $spacing-md;
+
+        .action-btn {
+            flex: 1;
+        }
+    }
+}
+
+// Empty States
+.loading-state,
+.no-results,
+.empty-state {
+    text-align: center;
+    padding: $spacing-4xl $spacing-xl;
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba($primary-blue, 0.3);
+        border-radius: 50%;
+        border-top-color: $primary-blue;
+        animation: spin 1s linear infinite;
+        margin: 0 auto $spacing-md;
+    }
+
+    .material-icons {
+        font-size: 64px;
+        color: $text-secondary-light;
+        margin-bottom: $spacing-lg;
+    }
+
+    h2,
+    h3 {
+        margin-bottom: $spacing-md;
+    }
+
+    p {
+        color: $text-secondary-light;
+        margin-bottom: $spacing-lg;
+    }
+}

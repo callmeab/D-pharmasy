@@ -1,0 +1,443 @@
+@import '../../../styles/variables.scss';
+@import '../../../styles/mixins.scss';
+
+.home-page {
+    min-height: 100vh;
+}
+
+// ============================================
+// Hero Section
+// ============================================
+
+.hero-section {
+    position: relative;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    background: $gradient-hero;
+    overflow: hidden;
+    padding: $spacing-4xl $spacing-xl;
+
+    @include mobile {
+        min-height: 80vh;
+        padding: $spacing-3xl $spacing-md;
+    }
+
+    // Animated background pattern
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image:
+            radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+        animation: pulse 4s ease-in-out infinite;
+    }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: $font-size-5xl;
+    font-weight: $font-weight-extrabold;
+    color: white;
+    margin-bottom: $spacing-lg;
+    line-height: 1.2;
+
+    @include mobile {
+        font-size: $font-size-4xl;
+    }
+
+    .text-gradient {
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+}
+
+.hero-subtitle {
+    font-size: $font-size-xl;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: $spacing-3xl;
+    font-weight: $font-weight-medium;
+
+    @include mobile {
+        font-size: $font-size-lg;
+    }
+}
+
+// ============================================
+// Search Container
+// ============================================
+
+.search-container {
+    position: relative;
+    margin-bottom: $spacing-2xl;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    background: white;
+    border-radius: $radius-2xl;
+    padding: $spacing-sm;
+    box-shadow: $shadow-2xl;
+    transition: transform $transition-base, box-shadow $transition-base;
+
+    &:focus-within {
+        transform: translateY(-4px);
+        box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
+    }
+
+    @include mobile {
+        flex-direction: column;
+        gap: $spacing-md;
+    }
+}
+
+.search-icon {
+    color: $primary-blue;
+    font-size: 28px;
+    margin-left: $spacing-md;
+
+    @include mobile {
+        display: none;
+    }
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: $font-size-lg;
+    padding: $spacing-md;
+    font-family: $font-primary;
+    color: $text-primary-light;
+
+    &::placeholder {
+        color: $text-secondary-light;
+    }
+
+    @include mobile {
+        width: 100%;
+        font-size: $font-size-base;
+    }
+}
+
+.search-btn {
+    flex-shrink: 0;
+    padding: $spacing-md $spacing-2xl;
+
+    @include mobile {
+        width: 100%;
+    }
+}
+
+// ============================================
+// Suggestions Dropdown
+// ============================================
+
+.suggestions-dropdown {
+    position: absolute;
+    top: calc(100% + $spacing-sm);
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: $radius-xl;
+    box-shadow: $shadow-xl;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-md $spacing-lg;
+    cursor: pointer;
+    transition: background $transition-fast;
+
+    &:hover {
+        background: rgba($primary-blue, 0.05);
+    }
+
+    &:not(:last-child) {
+        border-bottom: 1px solid $border-light;
+    }
+}
+
+.suggestion-icon {
+    color: $primary-blue;
+    font-size: 24px;
+}
+
+.suggestion-content {
+    flex: 1;
+}
+
+.suggestion-name {
+    font-weight: $font-weight-semibold;
+    color: $text-primary-light;
+    margin-bottom: $spacing-xs;
+}
+
+.suggestion-generic {
+    font-size: $font-size-sm;
+    color: $text-secondary-light;
+}
+
+// ============================================
+// Quick Stats
+// ============================================
+
+.quick-stats {
+    display: flex;
+    justify-content: center;
+    gap: $spacing-2xl;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    padding: $spacing-md $spacing-xl;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: $radius-xl;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-icon {
+    font-size: 32px;
+    color: white;
+}
+
+.stat-value {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: white;
+}
+
+.stat-label {
+    font-size: $font-size-sm;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+// ============================================
+// Popular Medicines Section
+// ============================================
+
+.popular-section {
+    padding: $spacing-4xl $spacing-xl;
+    background: $background-light;
+
+    @include mobile {
+        padding: $spacing-3xl $spacing-md;
+    }
+}
+
+.section-title {
+    text-align: center;
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    color: $text-primary-light;
+    margin-bottom: $spacing-md;
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: $font-size-lg;
+    color: $text-secondary-light;
+    margin-bottom: $spacing-3xl;
+}
+
+.medicines-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $spacing-xl;
+}
+
+.medicine-card {
+    cursor: pointer;
+    text-align: center;
+    padding: $spacing-xl;
+    transition: all $transition-base;
+
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: $shadow-primary;
+    }
+}
+
+.medicine-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto $spacing-lg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $gradient-primary;
+    border-radius: $radius-full;
+
+    .material-icons {
+        font-size: 32px;
+        color: white;
+    }
+}
+
+.medicine-name {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $text-primary-light;
+    margin-bottom: $spacing-sm;
+}
+
+.medicine-generic {
+    font-size: $font-size-sm;
+    color: $text-secondary-light;
+    margin-bottom: $spacing-md;
+}
+
+.medicine-meta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $spacing-sm;
+    flex-wrap: wrap;
+}
+
+.medicine-form {
+    font-size: $font-size-xs;
+    color: $text-secondary-light;
+    text-transform: uppercase;
+    letter-spacing: $letter-spacing-wide;
+}
+
+// ============================================
+// How It Works Section
+// ============================================
+
+.how-it-works-section {
+    padding: $spacing-4xl $spacing-xl;
+    background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
+
+    @include mobile {
+        padding: $spacing-3xl $spacing-md;
+    }
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: $spacing-2xl;
+}
+
+.step-card {
+    position: relative;
+    text-align: center;
+    padding: $spacing-2xl;
+    transition: transform $transition-base;
+
+    &:hover {
+        transform: translateY(-8px);
+    }
+}
+
+.step-number {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $gradient-primary;
+    color: white;
+    font-weight: $font-weight-bold;
+    border-radius: $radius-full;
+    box-shadow: $shadow-primary;
+}
+
+.step-icon {
+    width: 80px;
+    height: 80px;
+    margin: $spacing-xl auto $spacing-lg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba($primary-blue, 0.1), rgba($primary-purple, 0.1));
+    border-radius: $radius-full;
+
+    .material-icons {
+        font-size: 40px;
+        color: $primary-blue;
+    }
+}
+
+.step-title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $text-primary-light;
+    margin-bottom: $spacing-md;
+}
+
+.step-description {
+    font-size: $font-size-base;
+    color: $text-secondary-light;
+    line-height: $line-height-relaxed;
+}
+
+// ============================================
+// CTA Section
+// ============================================
+
+.cta-section {
+    padding: $spacing-4xl $spacing-xl;
+    background: $background-light;
+
+    @include mobile {
+        padding: $spacing-3xl $spacing-md;
+    }
+}
+
+.cta-card {
+    text-align: center;
+    padding: $spacing-3xl;
+    max-width: 600px;
+    margin: 0 auto;
+
+    @include mobile {
+        padding: $spacing-2xl;
+    }
+}
+
+.cta-title {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    color: $text-primary-light;
+    margin-bottom: $spacing-md;
+
+    @include mobile {
+        font-size: $font-size-2xl;
+    }
+}
+
+.cta-description {
+    font-size: $font-size-lg;
+    color: $text-secondary-light;
+    margin-bottom: $spacing-xl;
+}

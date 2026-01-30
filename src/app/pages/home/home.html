@@ -1,0 +1,152 @@
+<div class="home-page">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content animate-slideUp">
+                <h1 class="hero-title">
+                    Find Your <span class="text-gradient">Medicine</span><br>
+                    At Nearby Pharmacies
+                </h1>
+                <p class="hero-subtitle">
+                    Pakistan's first pharmaceutical nervous system connecting you to medicines across the country
+                </p>
+
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <div class="search-box">
+                        <span class="material-icons search-icon">search</span>
+                        <input type="text" class="search-input"
+                            placeholder="Search for medicines (e.g., Panadol, Augmentin...)" [(ngModel)]="searchQuery"
+                            (input)="onSearchInput()" (keyup.enter)="search()" />
+                        <button class="btn btn-primary search-btn" (click)="search()">
+                            Search
+                        </button>
+                    </div>
+
+                    <!-- Autocomplete Suggestions -->
+                    @if (showSuggestions && suggestions.length > 0) {
+                    <div class="suggestions-dropdown animate-slideDown">
+                        @for (medicine of suggestions; track medicine.id) {
+                        <div class="suggestion-item" (click)="selectSuggestion(medicine)">
+                            <span class="material-icons suggestion-icon">medication</span>
+                            <div class="suggestion-content">
+                                <div class="suggestion-name">{{ medicine.name }}</div>
+                                <div class="suggestion-generic">{{ medicine.genericName }}</div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    }
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="quick-stats">
+                    <div class="stat-item">
+                        <span class="material-icons stat-icon">local_pharmacy</span>
+                        <div class="stat-content">
+                            <div class="stat-value">10+</div>
+                            <div class="stat-label">Pharmacies</div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="material-icons stat-icon">medication</span>
+                        <div class="stat-content">
+                            <div class="stat-value">20+</div>
+                            <div class="stat-label">Medicines</div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="material-icons stat-icon">location_on</span>
+                        <div class="stat-content">
+                            <div class="stat-value">3</div>
+                            <div class="stat-label">Cities</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Medicines Section -->
+    <section class="popular-section">
+        <div class="container">
+            <h2 class="section-title">Popular Medicines</h2>
+            <p class="section-subtitle">Frequently searched medicines in Pakistan</p>
+
+            <div class="medicines-grid">
+                @for (medicine of popularMedicines; track medicine.id) {
+                <div class="medicine-card card" (click)="searchMedicine(medicine.name)">
+                    <div class="medicine-icon">
+                        <span class="material-icons">medication</span>
+                    </div>
+                    <h3 class="medicine-name">{{ medicine.name }}</h3>
+                    <p class="medicine-generic">{{ medicine.genericName }}</p>
+                    <div class="medicine-meta">
+                        <span class="badge badge-primary">{{ medicine.category }}</span>
+                        <span class="medicine-form">{{ medicine.dosageForm }}</span>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works-section">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Find medicines in 3 simple steps</p>
+
+            <div class="steps-grid">
+                <div class="step-card card-glass">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <span class="material-icons">search</span>
+                    </div>
+                    <h3 class="step-title">Search Medicine</h3>
+                    <p class="step-description">
+                        Enter the name of the medicine you're looking for
+                    </p>
+                </div>
+
+                <div class="step-card card-glass">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <span class="material-icons">location_on</span>
+                    </div>
+                    <h3 class="step-title">Find Nearby Pharmacies</h3>
+                    <p class="step-description">
+                        See which pharmacies have it in stock near you
+                    </p>
+                </div>
+
+                <div class="step-card card-glass">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <span class="material-icons">phone</span>
+                    </div>
+                    <h3 class="step-title">Contact & Get Directions</h3>
+                    <p class="step-description">
+                        Call the pharmacy or get directions to reach them
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-card card-gradient-border">
+                <h2 class="cta-title">Are you a pharmacy owner?</h2>
+                <p class="cta-description">
+                    Join D-Pharmasy and make your inventory visible to thousands of customers
+                </p>
+                <button class="btn btn-primary btn-lg" routerLink="/pharmacy-dashboard">
+                    <span class="material-icons">store</span>
+                    Access Pharmacy Dashboard
+                </button>
+            </div>
+        </div>
+    </section>
+</div>

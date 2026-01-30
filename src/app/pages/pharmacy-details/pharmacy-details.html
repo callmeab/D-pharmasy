@@ -1,0 +1,164 @@
+@if (pharmacy) {
+<div class="details-page">
+    <!-- Header/Cover -->
+    <header class="pharmacy-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="profile-section">
+                    <div class="pharmacy-avatar">
+                        <span class="material-icons">store</span>
+                    </div>
+                    <div class="pharmacy-info">
+                        <h1>{{pharmacy.name}}</h1>
+                        <div class="rating">
+                            <span class="material-icons star">star</span>
+                            <strong>{{pharmacy.rating}}</strong>
+                            <span class="reviews">(128 reviews)</span>
+                            @if (pharmacy.verified) {
+                            <span class="verified-badge">
+                                <span class="material-icons">verified</span> Verified
+                            </span>
+                            }
+                        </div>
+                        <p class="address">
+                            <span class="material-icons">place</span>
+                            {{pharmacy.location.address}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <a [href]="getGoogleMapsUrl()" target="_blank" class="btn btn-outline">
+                        <span class="material-icons">directions</span> Get Directions
+                    </a>
+                    <a [href]="'tel:' + pharmacy.phone" class="btn btn-primary">
+                        <span class="material-icons">call</span> {{pharmacy.phone}}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container content-grid">
+        <!-- Main Content: Inventory -->
+        <main class="main-content">
+            <div class="inventory-card card">
+                <div class="card-header">
+                    <h2>Available Medicines</h2>
+
+                    <div class="filters">
+                        <div class="search-box">
+                            <span class="material-icons">search</span>
+                            <input type="text" placeholder="Search inventory..." [(ngModel)]="searchQuery"
+                                (input)="onSearch()">
+                        </div>
+
+                        <select [(ngModel)]="sortBy" (change)="onSortChange()" class="sort-select">
+                            <option value="name">Sort by Name</option>
+                            <option value="price">Sort by Price</option>
+                            <option value="quantity">Sort by Quantity</option>
+                        </select>
+                    </div>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" [(ngModel)]="showOutOfStock" (change)="onStockFilterChange()">
+                        Show Out of Stock
+                    </label>
+                </div>
+
+                <div class="inventory-list">
+                    @for (item of filteredInventory; track item.id) {
+                    <div class="inventory-item">
+                        <div class="item-icon">
+                            <span class="material-icons">medication</span>
+                        </div>
+
+                        <div class="item-details">
+                            <h3>{{item.medicine.name}}</h3>
+                            <p class="generic">{{item.medicine.genericName}}</p>
+                            <div class="meta">
+                                <span class="badge">{{item.medicine.dosageForm}}</span>
+                                <span class="strength">{{item.medicine.strength}}</span>
+                            </div>
+                        </div>
+
+                        <div class="item-status">
+                            <div class="price">Rs. {{item.price}}</div>
+                            <div class="stock-info" [style.color]="getStatusColor(item.stockStatus)">
+                                {{getStatusLabel(item.stockStatus)}} ({{item.quantity}})
+                            </div>
+                        </div>
+                    </div>
+                    } @empty {
+                    <div class="empty-inventory">
+                        <p>No medicines found matching your filters.</p>
+                    </div>
+                    }
+                </div>
+            </div>
+        </main>
+
+        <!-- Sidebar: Info & Stats -->
+        <aside class="sidebar">
+            <!-- Stats Card -->
+            <div class="stats-card card-glass">
+                <h3>Store Statistics</h3>
+                <div class="stat-row">
+                    <div class="stat">
+                        <span class="label">Total Products</span>
+                        <span class="value">{{stats?.totalProducts || 0}}</span>
+                    </div>
+                    <div class="stat">
+                        <span class="label">In Stock</span>
+                        <span class="value success">{{stats?.inStock || 0}}</span>
+                    </div>
+                    <div class="stat">
+                        <span class="label">Low Stock</span>
+                        <span class="value warning">{{stats?.lowStock || 0}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Operating Hours -->
+            <div class="hours-card card">
+                <h3><span class="material-icons">schedule</span> Operating Hours</h3>
+                <ul class="hours-list">
+                    @for (day of pharmacy.operatingHours.days; track day) {
+                    <li>
+                        <span class="day">{{day}}</span>
+                        @if (pharmacy.operatingHours.is24Hours) {
+                        <span class="time">24 Hours</span>
+                        } @else {
+                        <span class="time">{{pharmacy.operatingHours.open}} - {{pharmacy.operatingHours.close}}</span>
+                        }
+                    </li>
+                    }
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="contact-card card">
+                <h3><span class="material-icons">contact_support</span> Contact</h3>
+                <div class="contact-item">
+                    <span class="label">Owner</span>
+                    <span>{{pharmacy.ownerName}}</span>
+                </div>
+                <div class="contact-item">
+                    <span class="label">Email</span>
+                    <a [href]="'mailto:' + pharmacy.email">{{pharmacy.email}}</a>
+                </div>
+                <div class="contact-item">
+                    <span class="label">License</span>
+                    <span>{{pharmacy.registrationNumber}}</span>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>
+} @else {
+<div class="not-found">
+    <div class="spinner"></div>
+    <p>Loading pharmacy details...</p>
+    <button class="btn btn-outline" routerLink="/search">Back to Search</button>
+</div>
+}

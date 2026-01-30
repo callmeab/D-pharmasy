@@ -1,0 +1,128 @@
+<div class="search-page">
+    <div class="container">
+        <!-- Search Header -->
+        <div class="search-header">
+            <div class="search-bar-wrapper">
+                <span class="material-icons search-icon">search</span>
+                <input type="text" placeholder="Search for medicine..." [(ngModel)]="searchQuery"
+                    (keyup.enter)="performSearch()">
+                <button class="btn btn-primary" (click)="performSearch()">Search</button>
+            </div>
+        </div>
+
+        @if (isLoading) {
+        <div class="loading-state">
+            <div class="spinner"></div>
+            <p>Finding pharmacies near you...</p>
+        </div>
+        } @else if (!selectedMedicine) {
+        <div class="no-results">
+            <span class="material-icons icon">medication_liquid</span>
+            <h2>No medicines found matching "{{searchQuery}}"</h2>
+            <p>Try checking the spelling or search for a different medicine.</p>
+            <button class="btn btn-outline" routerLink="/home">Back to Home</button>
+        </div>
+        } @else {
+        <div class="results-container">
+            <!-- Sidebar Filters -->
+            <aside class="filters-sidebar card-glass">
+                <div class="medicine-info">
+                    <h3>{{selectedMedicine.name}}</h3>
+                    <p class="generic">{{selectedMedicine.genericName}}</p>
+                    <div class="badge badge-primary">{{selectedMedicine.category}}</div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="filter-group">
+                    <label>Distance Limit: <span class="primary-color">{{radius}} km</span></label>
+                    <input type="range" min="1" max="20" step="1" [(ngModel)]="radius" (change)="onRadiusChange()"
+                        class="range-slider">
+                    <div class="range-labels">
+                        <span>1km</span>
+                        <span>20km</span>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label>View Mode</label>
+                    <div class="view-toggle">
+                        <button class="toggle-btn" [class.active]="viewMode === 'list'" (click)="viewMode = 'list'">
+                            <span class="material-icons">list</span> List
+                        </button>
+                        <button class="toggle-btn" [class.active]="viewMode === 'map'" (click)="viewMode = 'map'">
+                            <span class="material-icons">map</span> Map
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Results List -->
+            <main class="results-content">
+                <div class="results-header">
+                    <h2>{{filteredResults.length}} Pharmacies Found</h2>
+                    <p>Showing result for {{selectedMedicine.name}} within {{radius}}km</p>
+                </div>
+
+                @if (filteredResults.length === 0) {
+                <div class="empty-state">
+                    <span class="material-icons">location_off</span>
+                    <h3>No pharmacies found nearby</h3>
+                    <p>Try increasing the distance radius to find more results.</p>
+                </div>
+                } @else {
+                @if (viewMode === 'list') {
+                <div class="pharmacy-grid">
+                    @for (result of filteredResults; track result.pharmacy.id) {
+                    <div class="pharmacy-card card animate-slideUp">
+                        <div class="card-header">
+                            <div class="pharmacy-info">
+                                <h3>{{result.pharmacy.name}}</h3>
+                                <div class="distance-badge">
+                                    <span class="material-icons">near_me</span>
+                                    {{formatDist(result.distance)}}
+                                </div>
+                            </div>
+                            <div class="status-badge" [style.color]="getStatusColor(result.inventoryItem.stockStatus)">
+                                <span class="dot"
+                                    [style.background]="getStatusColor(result.inventoryItem.stockStatus)"></span>
+                                {{getStatusLabel(result.inventoryItem.stockStatus)}}
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="price-info">
+                                <span class="label">Price</span>
+                                <span class="value">Rs. {{result.inventoryItem.price}}</span>
+                            </div>
+                            <div class="address-info">
+                                <span class="material-icons">location_on</span>
+                                {{result.pharmacy.location.address}}
+                            </div>
+                        </div>
+
+                        <div class="card-actions">
+                            <button class="btn btn-outline btn-sm action-btn">
+                                <span class="material-icons">directions</span> Directions
+                            </button>
+                            <button class="btn btn-primary btn-sm action-btn"
+                                [routerLink]="['/pharmacy', result.pharmacy.id]">
+                                <span class="material-icons">store</span> View Details
+                            </button>
+                        </div>
+                    </div>
+                    }
+                </div>
+                } @else {
+                <!-- Map View -->
+                <div class="map-view-container animate-fade">
+                    <app-map [center]="userLocation" [zoom]="13" [pharmacies]="filteredResults" [radius]="radius">
+                    </app-map>
+                </div>
+                }
+                }
+            </main>
+        </div>
+        }
+    </div>
+</div>
