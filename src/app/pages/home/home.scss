@@ -444,24 +444,41 @@
 
 // Header
 .main-header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-  padding: $spacing-md 0;
-  
-  .header-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .logo {
-    img {
-      height: 40px;
-      width: auto;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    padding: $spacing-md 0;
+
+    .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
-  }
+
+    .logo-text {
+        display: flex;
+        align-items: center;
+        gap: $spacing-xs;
+        cursor: pointer;
+
+        .brand-icon {
+            font-size: 32px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand-name {
+            font-size: $font-size-xl;
+            font-weight: $font-weight-extrabold;
+            color: white;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+            .accent {
+                color: #fbbf24; // Amber color for "Trace"
+            }
+        }
+    }
 }
