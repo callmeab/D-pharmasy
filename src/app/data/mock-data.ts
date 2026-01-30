@@ -1,5 +1,5 @@
 // ============================================
-// D-Pharmasy Mock Data
+// Pakistan Trace Pharma Mock Data
 // Realistic Pakistani Pharmacy Data
 // ============================================
 
